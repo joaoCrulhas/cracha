@@ -8,5 +8,6 @@ import { EncryptModule } from '../system/encrypt/encrypt.module';
   imports: [EncryptModule],
   controllers: [UserController],
   providers: [UserRepository, UserService],
+  exports: [UserService],
 })
 export class UserModule {}

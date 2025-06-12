@@ -1,0 +1,9 @@
+POST {{url}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "XYw93vTysOn0qYyHw@MpCw.de",
+  "password": "12345"
+}
+
+###

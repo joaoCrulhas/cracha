@@ -1,0 +1,13 @@
+POST {{url}}/user
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email": "{{ $random.email }}",
+  "password": "123456",
+  "firstName": "{{$random.address.firstName}}",
+  "lastName": "{{$random.address.lastName}}",
+  "hasDashboardAccess": false
+}
+
+###
