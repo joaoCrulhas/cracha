@@ -2,27 +2,25 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from './user.service';
 import { UserTestHelper } from '../../../../helpers/test/user-test.helper';
 import { createMock, DeepMocked } from '@golevelup/ts-jest';
-import { IRepository } from '../../../../types/repository/repository.type';
-import { User } from '../entities/user.entity';
 import { faker } from '@faker-js/faker';
-import { UserRepositoryToken } from '../user.module';
+import { UserRepository } from '../repository';
 
 describe('UserService', () => {
   let service: UserService;
-  let userRepository: DeepMocked<IRepository<User>>;
+  let userRepository: DeepMocked<UserRepository>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         UserService,
         {
-          provide: UserRepositoryToken,
-          useValue: createMock<IRepository<User>>(),
+          provide: UserRepository,
+          useValue: createMock<UserRepository>(),
         },
       ],
     }).compile();
 
-    userRepository = module.get(UserRepositoryToken);
+    userRepository = module.get(UserRepository);
     service = module.get<UserService>(UserService);
   });
 

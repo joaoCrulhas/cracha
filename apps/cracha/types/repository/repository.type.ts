@@ -1,6 +1,6 @@
 // In this interface the repository will provide everything reagarind the read
 export interface IRepositoryRead<T = unknown> {
-  find(): Promise<T>;
+  find(where: any): Promise<T>;
   findById(id: number): Promise<T>;
 }
 

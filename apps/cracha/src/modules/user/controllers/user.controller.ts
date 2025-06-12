@@ -9,4 +9,12 @@ export class UserController {
   async createUser(@Body() input: CreateUserRequestDto) {
     return await this.userService.create(input);
   }
+
+  @Post()
+  async createAdmin(@Body() input: CreateUserRequestDto) {
+    return await this.userService.create({
+      ...input,
+      hasDashboardAccess: true,
+    });
+  }
 }
