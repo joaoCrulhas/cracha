@@ -45,4 +45,4 @@ Thumbs.db
 
 /generated/prisma
 .env
-/prisma/generated/
+/prisma/src/lib/generated/

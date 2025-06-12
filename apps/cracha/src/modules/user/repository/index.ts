@@ -6,7 +6,7 @@ import { CreateUserRequestDto } from '../dtos';
 export class UserRepository implements IRepositoryWrite<User> {
   constructor(private readonly databaseService: DatabaseService) {}
   async insert(input: CreateUserRequestDto): Promise<User> {
-    return this.databaseService.user.create({
+    return this.databaseService.client.user.create({
       data: input,
     });
   }
