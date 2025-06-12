@@ -1,8 +1,13 @@
 import { IRepositoryWrite } from '../../../../types/repository/repository.type';
 import { User } from '../entities/user.entity';
+import { DatabaseService } from '../../system/database/services/database.service';
+import { CreateUserRequestDto } from '../dtos';
 
 export class UserRepository implements IRepositoryWrite<User> {
-  async insert(input: any): Promise<User> {
-    throw new Error('Method not implemented.');
+  constructor(private readonly databaseService: DatabaseService) {}
+  async insert(input: CreateUserRequestDto): Promise<User> {
+    return this.databaseService.user.create({
+      data: input,
+    });
   }
 }
