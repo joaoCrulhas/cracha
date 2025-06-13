@@ -18,8 +18,6 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    console.log(rest);
-
     const accessToken = await this.jwtService.signAsync(rest);
     return {
       accessToken,
