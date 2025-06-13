@@ -1,6 +1,7 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import { CreateUserRequestDto } from '../dtos';
 import { UserService } from '../services';
+import { Request } from 'express';
 
 @Controller('user')
 export class UserController {
@@ -16,5 +17,10 @@ export class UserController {
       ...input,
       hasDashboardAccess: true,
     });
+  }
+
+  @Get('me')
+  public me(@Req() request: Request & { user: any }) {
+    return request.user;
   }
 }
