@@ -6,6 +6,7 @@ export interface IRepositoryRead<T = unknown> {
 
 export interface IRepositoryWrite<T = unknown> {
   insert(input: any): Promise<T>;
+  update(id: number, input: any): Promise<T>;
 }
 
 export type IRepository<T = unknown> = IRepositoryWrite<T> & IRepositoryRead<T>;

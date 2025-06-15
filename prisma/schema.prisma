@@ -29,3 +29,14 @@ model User {
   @@index([hasDashboardAccess])
   @@map("users")
 }
+
+model Role {
+  id          Int     @id @default(autoincrement())
+  description String?
+  name        String  @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("roles")
+}
