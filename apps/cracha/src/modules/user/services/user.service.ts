@@ -3,6 +3,9 @@ import { CreateUserRequestDto } from '../dtos';
 import { UserRepository } from '../repository';
 import { User } from '../entities/user.entity';
 import { EncryptService } from '../../system/encrypt/services/encrypt.service';
+import { Prisma } from 'prisma/src/lib/generated';
+
+type FindUserArgs = { email?: string };
 
 @Injectable()
 export class UserService {
@@ -17,11 +20,13 @@ export class UserService {
     });
   }
 
-  async find({ email }: { email: string }) {
-    return await this.userRepository.find({
+  async find(args: FindUserArgs) {
+    const { email } = args;
+    const prismaArgs: Prisma.UserFindFirstOrThrowArgs = {
       where: {
-        email,
+        ...(email && { email }),
       },
-    });
+    };
+    return await this.userRepository.find(prismaArgs);
   }
 }
