@@ -1,10 +1,14 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
-import { prisma } from '@cracha/prisma';
+import { customPrismaClient, CustomPrismaClient, prisma } from '@cracha/prisma';
 
 @Injectable()
 export class DatabaseService implements OnModuleInit {
-  get client() {
-    return prisma;
+  customPrismaClient: CustomPrismaClient;
+  get client(): CustomPrismaClient {
+    if (!this.customPrismaClient)
+      this.customPrismaClient = customPrismaClient(prisma);
+
+    return this.customPrismaClient;
   }
 
   async onModuleInit() {

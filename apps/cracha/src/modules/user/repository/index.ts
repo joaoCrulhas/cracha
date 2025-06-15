@@ -14,6 +14,10 @@ export class UserRepository
 {
   constructor(private readonly databaseService: DatabaseService) {}
 
+  delete(id: number): Promise<User> {
+    throw new Error('Method not implemented.');
+  }
+
   update(id: number, input: any): Promise<User> {
     throw new Error('Method not implemented.');
   }

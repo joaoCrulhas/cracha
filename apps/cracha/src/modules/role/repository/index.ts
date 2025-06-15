@@ -12,6 +12,12 @@ export class RoleRepository
 {
   constructor(private readonly databaseService: DatabaseService) {}
 
+  async delete(id: number): Promise<Role> {
+    return this.databaseService.client.role.delete({
+      id,
+    });
+  }
+
   update(id: number, input: UpdateRoleRequestDto): Promise<Role> {
     return this.databaseService.client.role.update({
       data: input,

@@ -12,4 +12,8 @@ export class RoleService {
   async update(id: number, input: UpdateRoleRequestDto): Promise<Role> {
     return await this.roleRepository.update(id, input);
   }
+
+  async delete(id: number): Promise<Role> {
+    return await this.roleRepository.delete(id);
+  }
 }
