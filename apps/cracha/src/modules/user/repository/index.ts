@@ -18,7 +18,11 @@ export class UserRepository
     return this.databaseService.client.user.findFirstOrThrow(args);
   }
   findById(id: number): Promise<User> {
-    throw new Error('Method not implemented.');
+    return this.databaseService.client.user.findUniqueOrThrow({
+      where: {
+        id,
+      },
+    });
   }
 
   async insert(input: CreateUserRequestDto): Promise<User> {
