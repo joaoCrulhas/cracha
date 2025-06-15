@@ -14,6 +14,10 @@ export class UserRepository
 {
   constructor(private readonly databaseService: DatabaseService) {}
 
+  update(id: number, input: any): Promise<User> {
+    throw new Error('Method not implemented.');
+  }
+
   async find(args: Prisma.UserFindFirstOrThrowArgs): Promise<User> {
     return this.databaseService.client.user.findFirstOrThrow(args);
   }

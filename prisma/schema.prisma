@@ -24,6 +24,7 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  Role      Role[]
 
   @@index([email])
   @@index([hasDashboardAccess])
@@ -31,9 +32,11 @@ model User {
 }
 
 model Role {
-  id          Int     @id @default(autoincrement())
-  description String?
-  name        String  @unique
+  id            Int     @id @default(autoincrement())
+  description   String?
+  name          String  @unique
+  createdUserId Int // User who created the role
+  createrUser   User    @relation(fields: [createdUserId], references: [id], onDelete: NoAction)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
