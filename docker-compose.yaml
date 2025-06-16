@@ -1,12 +1,29 @@
 version: '3.8'
 
 services:
+  postgres-test:
+    image: postgres:16.9-bullseye
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      POSTGRES_DB: ${POSTGRES_DB:-cracha-test}
+    ports:
+      - "${POSTGRES_PORT:-5435}:5435"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+
   postgres:
     image: postgres:16.9-bullseye
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
-      POSTGRES_DB: ${POSTGRES_DB:-mydatabase}
+      POSTGRES_DB: ${POSTGRES_DB:-cracha-dev}
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
     volumes:

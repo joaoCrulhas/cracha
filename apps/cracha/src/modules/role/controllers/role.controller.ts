@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   Param,
   ParseIntPipe,
   Post,
@@ -37,5 +38,15 @@ export class RoleController {
   @Delete('/:id')
   async deleteRole(@Param('id', ParseIntPipe) id: number) {
     return await this.roleService.delete(id);
+  }
+
+  @Get()
+  async getAllRoles() {
+    await this.roleService.getAll();
+  }
+
+  @Get('/:roleId')
+  async getRoleById(@Param('roleId', ParseIntPipe) roleId: number) {
+    return await this.roleService.getById(roleId);
   }
 }

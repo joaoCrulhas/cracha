@@ -25,4 +25,16 @@ export class RoleService {
       id,
     });
   }
+
+  async getAll() {
+    return await this.databaseService.client.role.findMany();
+  }
+
+  async getById(roleId: number) {
+    return await this.databaseService.client.role.findFirstOrThrow({
+      where: {
+        id: roleId,
+      },
+    });
+  }
 }

@@ -39,6 +39,16 @@
       "options": {
         "passWithNoTests": true
       }
+    },
+    "run-test-scripts": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "/bin/bash ./scripts/setup-tests.sh"
+          }
+        ]
+      }
     }
   }
 }
