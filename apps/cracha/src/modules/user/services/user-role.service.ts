@@ -6,7 +6,7 @@ type UserRoleArgs = { userId: number; roleId: number };
 @Injectable()
 export class UserRoleService {
   constructor(private readonly databaseService: DatabaseService) {}
-  async relateUserRole({ userId, roleId }: UserRoleArgs) {
+  async assignUserRole({ userId, roleId }: UserRoleArgs) {
     await this.databaseService.client.userRoles.create({
       data: {
         roleId,

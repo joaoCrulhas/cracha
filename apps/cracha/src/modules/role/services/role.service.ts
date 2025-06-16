@@ -1,19 +1,28 @@
 import { Injectable } from '@nestjs/common';
 import { CreateRoleRequestDto, Role, UpdateRoleRequestDto } from '../dtos';
-import { RoleRepository } from '../repository';
+import { DatabaseService } from '../../system/database/services/database.service';
 
 @Injectable()
 export class RoleService {
-  constructor(private readonly roleRepository: RoleRepository) {}
+  constructor(private readonly databaseService: DatabaseService) {}
   async create(input: CreateRoleRequestDto): Promise<Role> {
-    return await this.roleRepository.insert(input);
+    return await this.databaseService.client.role.create({
+      data: input,
+    });
   }
 
   async update(id: number, input: UpdateRoleRequestDto): Promise<Role> {
-    return await this.roleRepository.update(id, input);
+    return await this.databaseService.client.role.update({
+      data: input,
+      where: {
+        id,
+      },
+    });
   }
 
   async delete(id: number): Promise<Role> {
-    return await this.roleRepository.delete(id);
+    return await this.databaseService.client.role.delete({
+      id,
+    });
   }
 }
