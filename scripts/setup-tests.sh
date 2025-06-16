@@ -7,16 +7,26 @@ set -e
 SCHEMA_PATH="prisma/schema.prisma"
 
 
-# Path to your .env.test file
-ENV_FILE=".env.test"
+echo "Cleaning the psql-test service...."
+docker compose down -v postgres-test
+
+echo "Starting the psql-test service container...."
+docker compose up -d postgres-test
+
+echo "⏳ Waiting for postgres-test to be healthy..."
+
+# Wait for the container to be healthy
+until [ "$(docker inspect -f '{{.State.Health.Status}}' psql-test)" == "healthy" ]; do
+  echo "⌛ Still waiting for postgres-test to be healthy..."
+  sleep 3
+done
+
+echo "Container to test is healthy...."
+
+echo "Execute the migrations in this container"
+
+DATABASE_URL="postgresql://root:password@localhost:5435/cracha-test" nx run prisma:migrate-dev
 
 
-# Check if env file exists
-if [ ! -f "$ENV_FILE" ]; then
-  echo "❌ Error: $ENV_FILE not found!"
-  exit 1
-fi
-
-
-echo "Executing the tests...."
-docker ps
+echo "Starting test cracha backend"
+nx run cracha:test
