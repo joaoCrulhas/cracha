@@ -41,9 +41,10 @@ model Role {
   createrUser   User      @relation(fields: [createdUserId], references: [id], onDelete: NoAction)
   deletedAt     DateTime?
 
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-  UserRoles UserRoles[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  UserRoles      UserRoles[]
+  RolePermission RolePermission[]
 
   @@map("roles")
 }
@@ -61,4 +62,43 @@ model UserRoles {
 
   @@unique([roleId, userId])
   @@map("user_roles")
+}
+
+model Resource {
+  id             Int              @id @default(autoincrement())
+  name           String           @unique
+  actionResource ActionResource[]
+
+  @@map("resources")
+}
+
+model Action {
+  id             Int              @id @default(autoincrement())
+  name           String           @unique // e.g., 'read', 'create', etc.
+  actionResource ActionResource[]
+
+  @@map("actions")
+}
+
+model RolePermission {
+  id               Int            @id @default(autoincrement())
+  role             Role           @relation(fields: [roleId], references: [id])
+  roleId           Int
+  actionResource   ActionResource @relation(fields: [actionResourceId], references: [id])
+  actionResourceId Int
+
+  @@unique([roleId, actionResourceId])
+  @@map("role_permissions")
+}
+
+model ActionResource {
+  id          Int              @id @default(autoincrement())
+  action      Action           @relation(fields: [actionId], references: [id])
+  actionId    Int
+  resource    Resource         @relation(fields: [resourceId], references: [id])
+  resourceId  Int
+  permissions RolePermission[]
+
+  @@unique([actionId, resourceId])
+  @@map("action_resources")
 }
