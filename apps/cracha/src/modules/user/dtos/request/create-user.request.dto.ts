@@ -1,4 +1,4 @@
 import { OmitType } from '@nestjs/swagger';
-import { User } from '../../entities/user.entity';
+import { User } from '../response/user-response.dto';
 
 export class CreateUserRequestDto extends OmitType(User, ['id']) {}
