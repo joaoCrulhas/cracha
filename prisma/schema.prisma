@@ -22,10 +22,11 @@ model User {
   email              String  @unique @db.VarChar(255)
   hasDashboardAccess Boolean @default(false)
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
   deletedAt DateTime?
   Role      Role[]
+  UserRoles UserRoles[]
 
   @@index([email])
   @@index([hasDashboardAccess])
@@ -40,8 +41,24 @@ model Role {
   createrUser   User      @relation(fields: [createdUserId], references: [id], onDelete: NoAction)
   deletedAt     DateTime?
 
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  UserRoles UserRoles[]
+
+  @@map("roles")
+}
+
+model UserRoles {
+  id     Int  @id @default(autoincrement())
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  roleId Int
+  role   Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("roles")
+  @@unique([roleId, userId])
+  @@map("user_roles")
 }

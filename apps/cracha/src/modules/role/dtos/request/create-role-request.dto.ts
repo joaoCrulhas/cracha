@@ -4,6 +4,7 @@ import { Role } from '../response/role.dto';
 
 export class CreateRoleRequestDto extends OmitType(Role, [
   'id',
+  'deletedAt',
   'createdAt',
   'updatedAt',
 ]) {}

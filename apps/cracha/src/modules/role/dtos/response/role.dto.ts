@@ -5,4 +5,5 @@ export class Role {
   description?: string;
   createdAt: Date;
   updatedAt: Date;
+  deletedAt: Date;
 }
