@@ -3,10 +3,6 @@
 # Exit on any error
 set -e
 
-# Absolute or relative path to your schema
-SCHEMA_PATH="prisma/schema.prisma"
-
-
 echo "Cleaning the psql-test service...."
 docker compose down -v postgres-test
 
@@ -24,9 +20,11 @@ done
 echo "Container to test is healthy...."
 
 echo "Execute the migrations in this container"
-
 DATABASE_URL="postgresql://root:password@localhost:5435/cracha-test" nx run prisma:migrate-dev
 
+echo "🍟 Running the seeds "
+DATABASE_URL="postgresql://root:password@localhost:5435/cracha-test" nx run prisma:seed
 
-echo "Starting test cracha backend"
+
+echo "🧪 Starting test cracha backend"
 nx run cracha:test

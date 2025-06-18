@@ -37,7 +37,8 @@
     },
     "test": {
       "options": {
-        "passWithNoTests": true
+        "passWithNoTests": true,
+        "coverage": true
       }
     },
     "run-test-scripts": {

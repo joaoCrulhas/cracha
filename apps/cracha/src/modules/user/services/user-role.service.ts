@@ -7,7 +7,7 @@ type UserRoleArgs = { userId: number; roleId: number };
 export class UserRoleService {
   constructor(private readonly databaseService: DatabaseService) {}
   async assignUserRole({ userId, roleId }: UserRoleArgs) {
-    await this.databaseService.client.userRoles.create({
+    return await this.databaseService.client.userRoles.create({
       data: {
         roleId,
         userId,

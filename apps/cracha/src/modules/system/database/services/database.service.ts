@@ -3,7 +3,7 @@ import { customPrismaClient, CustomPrismaClient, prisma } from '@cracha/prisma';
 
 @Injectable()
 export class DatabaseService implements OnModuleInit {
-  customPrismaClient: CustomPrismaClient;
+  private customPrismaClient: CustomPrismaClient;
   get client(): CustomPrismaClient {
     if (!this.customPrismaClient)
       this.customPrismaClient = customPrismaClient(prisma);
