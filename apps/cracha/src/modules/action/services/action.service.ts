@@ -9,7 +9,6 @@ export class ActionService implements OnModuleInit {
 
   async onModuleInit() {
     for (const actionName of DEFAULT_ACTIONS) {
-      console.log(actionName);
       const hasAction = await this.databaseService.client.action.count({
         where: {
           name: actionName,
