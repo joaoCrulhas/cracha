@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 import { createMock, DeepMocked } from '@golevelup/ts-jest';
 import { UserService } from '../../user/services';
 import { JwtService } from '@nestjs/jwt';
-import { UserTestHelper } from '../../../helpers/test/user-test.helper';
+import { UserTestHelper } from '../../../helpers/test';
 import { DatabaseService } from '../../system/database/services/database.service';
 import { prisma } from '@cracha/prisma';
 import { EncryptService } from '../../system/encrypt/services/encrypt.service';

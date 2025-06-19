@@ -1,25 +1,10 @@
-import { CreateUserRequestDto } from '../../modules/user/dtos';
 import { faker } from '@faker-js/faker';
 import { Prisma, PrismaClient, User } from '@cracha/prisma';
 
-type CreatedInput = {
-  email?: string;
-  password?: string;
-  firstName?: string;
-  lastName?: string;
-  hasDashboardAccess?: boolean;
-};
-
 export class UserTestHelper {
-  /**
-   * Generates a `CreateUserRequestDto` object.
-   * This function uses optional input values, and if any value is not provided,
-   * it will be automatically generated using the `faker` library.
-   *
-   * @param {CreatedInput} [input] - Optional input values to override defaults.
-   * @returns {CreateUserRequestDto} - The generated user input object.
-   */
-  static createUserInput(input?: CreatedInput): CreateUserRequestDto {
+  static createUserInput(
+    input?: Partial<Prisma.UserCreateInput>
+  ): Prisma.UserCreateInput {
     const fName = input?.firstName ?? faker.person.firstName();
     const lName = input?.lastName ?? faker.person.lastName();
     const uEmail =
@@ -29,6 +14,8 @@ export class UserTestHelper {
         lastName: lName,
       });
     return {
+      applicationId: faker.string.uuid(),
+      username: `${fName}_${lName}`,
       password: input?.password ?? faker.internet.password(),
       firstName: fName,
       lastName: lName,
@@ -50,7 +37,7 @@ export class UserTestHelper {
     input?: Prisma.UserCreateInput
   ): Promise<User> {
     return prisma.user.create({
-      data: input ?? UserTestHelper.createUserInput(),
+      data: input ?? UserTestHelper.createUserInput(input),
     });
   }
 }

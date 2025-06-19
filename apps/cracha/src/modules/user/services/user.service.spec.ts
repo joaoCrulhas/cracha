@@ -5,6 +5,8 @@ import { createMock, DeepMocked } from '@golevelup/ts-jest';
 import { EncryptService } from '../../system/encrypt/services/encrypt.service';
 import { CreateUserRequestDto } from '../dtos';
 import { faker } from '@faker-js/faker';
+import { ConfigService } from '@nestjs/config';
+import { mockedConfigService } from '../../../helpers/test';
 
 describe('UserService', () => {
   let service: UserService;
@@ -16,6 +18,10 @@ describe('UserService', () => {
       providers: [
         UserService,
         DatabaseService,
+        {
+          provide: ConfigService,
+          useValue: createMock<ConfigService>(mockedConfigService),
+        },
         {
           provide: EncryptService,
           useValue: createMock<EncryptService>(),
@@ -48,15 +54,19 @@ describe('UserService', () => {
       lastName,
       email,
       hasDashboardAccess: true,
+      username: `${firstName}.${lastName}`,
+      applicationId: faker.string.uuid(),
     };
 
     const expected = {
+      applicationId: userInput.applicationId,
       createdAt: expect.any(Date),
       deletedAt: null,
       email,
       firstName,
       hasDashboardAccess: true,
       id: expect.any(Number),
+      username: userInput.username,
       lastName,
       password: 'mocked_password',
       updatedAt: expect.any(Date),

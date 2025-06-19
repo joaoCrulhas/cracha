@@ -23,6 +23,10 @@ export class UserService implements OnModuleInit {
     const password = this.configService.getOrThrow<string>(
       'crachaAdminCredentials.password'
     );
+
+    const appId = this.configService.getOrThrow<string>(
+      'crachaAdminCredentials.appId'
+    );
     const uCount = await this.databaseService.client.user.count({
       where: {
         email: user,
@@ -35,11 +39,13 @@ export class UserService implements OnModuleInit {
     }
 
     await this.create({
+      username: user,
       email: user,
       password,
       firstName: 'admin',
       lastName: 'admin',
       hasDashboardAccess: true,
+      applicationId: appId,
     });
   }
 
