@@ -42,7 +42,7 @@ export class RoleController {
 
   @Get()
   async getAllRoles() {
-    await this.roleService.getAll();
+    return await this.roleService.getAll();
   }
 
   @Get('/:roleId')
