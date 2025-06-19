@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@cracha/prisma": ["prisma/src/index.ts"],
+      "@cracha/prisma": ["prisma/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

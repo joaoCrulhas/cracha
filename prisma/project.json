@@ -23,6 +23,12 @@
         "command": "prisma migrate dev"
       }
     },
+    "migrate-test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "DATABASE_URL=postgresql://root:password@localhost:5435/cracha-test prisma migrate dev"
+      }
+    },
     "build": {
       "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
