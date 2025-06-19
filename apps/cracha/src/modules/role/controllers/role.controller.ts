@@ -11,14 +11,14 @@ import {
 import { CreateRoleRequestDto, UpdateRoleRequestDto } from '../dtos';
 import { RoleService } from '../services';
 import { User as UserDecorator } from '../../../helpers/decorators/user.decorator';
-import { User } from '../../user/dtos/response/user-response.dto';
+import { UserDto } from '../../user/dtos/response/user-response.dto';
 
 @Controller('role')
 export class RoleController {
   constructor(private readonly roleService: RoleService) {}
   @Post()
   async create(
-    @UserDecorator() user: User,
+    @UserDecorator() user: UserDto,
     @Body() input: CreateRoleRequestDto
   ) {
     return await this.roleService.create({

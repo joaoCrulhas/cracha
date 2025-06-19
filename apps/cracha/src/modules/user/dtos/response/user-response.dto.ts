@@ -1,4 +1,6 @@
-export class User {
+import { User } from '@cracha/prisma';
+
+export class UserDto {
   id: number;
   applicationId: string;
   username: string;
@@ -7,4 +9,9 @@ export class User {
   lastName: string;
   email: string;
   hasDashboardAccess: boolean;
+  static fromPrisma(input: User): UserDto {
+    return {
+      ...input,
+    };
+  }
 }
