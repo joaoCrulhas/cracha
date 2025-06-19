@@ -1,7 +1,7 @@
 import { OmitType } from '@nestjs/swagger';
-import { Action } from '../response/action';
+import { ActionDto } from '../response/action';
 
-export class CreateActionDto extends OmitType(Action, [
+export class CreateActionDto extends OmitType(ActionDto, [
   'id',
   'createdAt',
   'updatedAt',

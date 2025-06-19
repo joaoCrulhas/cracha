@@ -1,18 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import { Action, CreateActionDto, UpdateActionDto } from '../dtos';
+import { ActionDto, CreateActionDto, UpdateActionDto } from '../dtos';
 import { DatabaseService } from '../../system/database/services/database.service';
 
 @Injectable()
 export class ActionService {
   constructor(private readonly databaseService: DatabaseService) {}
-  async createAction(input: CreateActionDto): Promise<Action> {
+  async createAction(input: CreateActionDto): Promise<ActionDto> {
     const actionCreated = await this.databaseService.client.action.create({
       data: input,
     });
-    return Action.fromPrisma(actionCreated);
+    return ActionDto.fromPrisma(actionCreated);
   }
 
-  async deleteAction(id: number): Promise<Action> {
+  async deleteAction(id: number): Promise<ActionDto> {
     return await this.databaseService.client.action.delete({
       where: {
         id,
@@ -20,7 +20,7 @@ export class ActionService {
     });
   }
 
-  async updateAction(id: number, input: UpdateActionDto): Promise<Action> {
+  async updateAction(id: number, input: UpdateActionDto): Promise<ActionDto> {
     return await this.databaseService.client.action.update({
       data: input,
       where: {
