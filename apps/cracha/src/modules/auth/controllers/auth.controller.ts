@@ -10,8 +10,8 @@ export class AuthController {
   @Post('login')
   @Public()
   async signIn(
-    @Body() { email, password }: { email: string; password: string }
+    @Body() { username, password }: { username: string; password: string }
   ) {
-    return await this.authService.signIn(email, password);
+    return await this.authService.signIn(username, password);
   }
 }

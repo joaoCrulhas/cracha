@@ -6,7 +6,10 @@ import { Prisma } from 'prisma/src/lib/generated';
 import { DatabaseService } from '../../system/database/services/database.service';
 import { ConfigService } from '@nestjs/config';
 
-type FindUserArgs = { email?: string };
+type FindUserArgs = {
+  email?: string;
+  username?: string;
+};
 
 @Injectable()
 export class UserService implements OnModuleInit {
@@ -59,9 +62,10 @@ export class UserService implements OnModuleInit {
   }
 
   async find(args: FindUserArgs) {
-    const { email } = args;
+    const { email, username } = args;
     const prismaArgs: Prisma.UserFindFirstOrThrowArgs = {
       where: {
+        ...(username && { username }),
         ...(email && { email }),
       },
     };

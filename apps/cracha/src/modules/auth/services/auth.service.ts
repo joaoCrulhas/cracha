@@ -11,8 +11,11 @@ export class AuthService {
     private readonly encryptService: EncryptService
   ) {}
 
-  async signIn(email: string, pass: string): Promise<{ accessToken: string }> {
-    const user = await this.userService.find({ email });
+  async signIn(
+    username: string,
+    pass: string
+  ): Promise<{ accessToken: string }> {
+    const user = await this.userService.find({ username });
     const { password, ...rest } = user;
     const match = await this.encryptService.compare(pass, password);
     if (!match) {
