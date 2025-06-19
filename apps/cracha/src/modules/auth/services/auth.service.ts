@@ -6,21 +6,20 @@ import { EncryptService } from '../../system/encrypt/services/encrypt.service';
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly usersService: UserService,
+    private readonly userService: UserService,
     private readonly jwtService: JwtService,
     private readonly encryptService: EncryptService
   ) {}
 
   async signIn(email: string, pass: string): Promise<{ accessToken: string }> {
-    const user = await this.usersService.find({ email });
+    const user = await this.userService.find({ email });
     const { password, ...rest } = user;
-    if (await this.encryptService.compare(pass, password)) {
+    const match = await this.encryptService.compare(pass, password);
+    if (!match) {
       throw new UnauthorizedException();
     }
-
-    const accessToken = await this.jwtService.signAsync(rest);
     return {
-      accessToken,
+      accessToken: await this.jwtService.signAsync(rest),
     };
   }
 }

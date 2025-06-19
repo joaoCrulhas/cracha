@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { CreateRoleRequestDto, UpdateRoleRequestDto } from '../dtos';
 import { RoleService } from '../services';
-import { User as UserDecorator } from '../../../../helpers/decorators/user.decorator';
+import { User as UserDecorator } from '../../../helpers/decorators/user.decorator';
 import { User } from '../../user/dtos/response/user-response.dto';
 
 @Controller('role')
