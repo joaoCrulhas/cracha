@@ -41,6 +41,16 @@
         "coverage": true
       }
     },
+    "setup-local-env": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "/bin/bash ./scripts/setup-envs.sh DEV"
+          }
+        ]
+      }
+    },
     "run-test-scripts": {
       "executor": "nx:run-commands",
       "options": {

@@ -5,9 +5,20 @@ import { UserModule } from '../modules/user/user.module';
 import { DatabaseModule } from '../modules/system/database/database.module';
 import { AuthModule } from '../modules/auth/auth.module';
 import { RoleModule } from '../modules/role/role.module';
+import { ConfigModule } from '@nestjs/config';
+import configuration from '../config';
 
 @Module({
-  imports: [DatabaseModule, UserModule, AuthModule, RoleModule],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [configuration],
+    }),
+    DatabaseModule,
+    UserModule,
+    AuthModule,
+    RoleModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

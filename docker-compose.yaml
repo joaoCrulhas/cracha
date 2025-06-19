@@ -22,6 +22,9 @@ services:
 
 
   postgres:
+    networks:
+      - dev-network
+    container_name: psql-dev
     image: postgres:16.9-bullseye
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
@@ -40,3 +43,8 @@ services:
 volumes:
   postgres_data_test:
   postgres_data:
+
+networks:
+  dev-network:
+  test-network:
+

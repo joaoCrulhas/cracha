@@ -20,6 +20,8 @@ model User {
   firstName          String
   lastName           String
   email              String  @unique @db.VarChar(255)
+  username           String  @db.VarChar(255)
+  applicationId      String  @db.VarChar(255) // This is the user_id in your application
   hasDashboardAccess Boolean @default(false)
 
   createdAt DateTime    @default(now())

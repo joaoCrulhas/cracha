@@ -9,6 +9,8 @@ export async function userSeed(prisma: PrismaClient, amount = 5) {
     const lastName = faker.person.lastName();
     const userCreated = await prisma.user.create({
       data: {
+        username: `${firstName}_${lastName}`,
+        applicationId: faker.string.uuid(),
         email: faker.internet.email({
           firstName,
           lastName,
