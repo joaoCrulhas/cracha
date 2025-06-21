@@ -18,7 +18,7 @@ export class UserRoleService {
   }
 
   async removeUserRole({ roleId, userId }: UserRoleArgs) {
-    await this.databaseService.client.userRoles.delete({
+    return await this.databaseService.client.userRoles.delete({
       where: {
         roleId_userId: {
           roleId,
@@ -37,9 +37,8 @@ export class UserRoleService {
         userId,
       },
     });
-    const roles: Role[] = userRoles.map((element) => {
-      return element.role;
-    });
+    const roles: Role[] = userRoles.map((element) => element.role);
+
     return {
       userId,
       roles,

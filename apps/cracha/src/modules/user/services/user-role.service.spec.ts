@@ -31,4 +31,24 @@ describe('UserRoleService', () => {
     expect(received.userId).toEqual(user.id);
     expect(received.roleId).toEqual(roleId);
   });
+
+  it('should return all roles assigned for an user', async () => {
+    const user = await UserTestHelper.createUser(databaseService.getPrisma());
+    await UserTestHelper.userRolesAssign(databaseService.getPrisma(), user.id);
+    const received = await service.getUserRoles(user.id);
+    expect(received.roles.length).toBeGreaterThan(0);
+    expect(received.userId).toEqual(user.id);
+  });
+
+  it('should remove a role for an user', async () => {
+    const user = await UserTestHelper.createUser(databaseService.getPrisma());
+    const { id: roleId } = await databaseService.client.role.findFirstOrThrow();
+    await UserTestHelper.userRolesAssign(databaseService.getPrisma(), user.id);
+    const received = await service.removeUserRole({
+      userId: user.id,
+      roleId,
+    });
+    expect(received.userId).toEqual(user.id);
+    expect(received.roleId).toEqual(roleId);
+  });
 });

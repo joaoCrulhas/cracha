@@ -40,4 +40,38 @@ export class UserTestHelper {
       data: input ?? UserTestHelper.createUserInput(input),
     });
   }
+
+  /**
+   * Assigns multiple roles to a user in the database.
+   * If no role IDs are provided, it assigns all available roles.
+   *
+   * @param {PrismaClient} prisma - The Prisma client instance used to interact with the database.
+   * @param {number} userId - The ID of the user to whom roles are being assigned.
+   * @param {number[]} [roleIds] - Optional array of role IDs to assign. If not provided, all roles will be assigned.
+   * @returns {Promise<Prisma.BatchPayload>} - A promise that resolves to the result of the createMany operation.
+   */
+  static async userRolesAssign(
+    prisma: PrismaClient,
+    userId: number,
+    roleIds?: number[]
+  ): Promise<Prisma.BatchPayload> {
+    if (!roleIds) {
+      const allRolesIds = await prisma.role.findMany({
+        select: {
+          id: true,
+        },
+      });
+      roleIds = allRolesIds.map((role) => role.id);
+    }
+    const userRoles: Prisma.UserRolesCreateManyInput[] = [];
+    for (const role of roleIds) {
+      userRoles.push({
+        userId,
+        roleId: role,
+      });
+    }
+    return prisma.userRoles.createMany({
+      data: userRoles,
+    });
+  }
 }
