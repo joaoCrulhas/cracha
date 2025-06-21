@@ -48,4 +48,16 @@ export class ActionService implements OnModuleInit {
       },
     });
   }
+
+  async getAll(): Promise<ActionDto[]> {
+    return await this.databaseService.client.action.findMany();
+  }
+
+  async getById(id: number): Promise<ActionDto> {
+    return await this.databaseService.client.action.findFirstOrThrow({
+      where: {
+        id,
+      },
+    });
+  }
 }

@@ -13,10 +13,12 @@ ENV="$1"
 
 # Define configuration based on environment
 if [ "$ENV" == "DEV" ]; then
+  COMMAND_RUN="nx run cracha:serve:development"
   SERVICE_NAME="postgres"
   CONTAINER_NAME="psql-dev"
   DATABASE_URL="postgresql://root:password@localhost:5432/cracha-dev"
 elif [ "$ENV" == "TEST" ]; then
+  COMMAND_RUN="nx run cracha:test"
   SERVICE_NAME="postgres-test"
   CONTAINER_NAME="psql-test"
   DATABASE_URL="postgresql://root:password@localhost:5435/cracha-test"
@@ -46,3 +48,6 @@ DATABASE_URL="$DATABASE_URL" nx run prisma:migrate-dev
 
 echo "🌱 Running seeds..."
 DATABASE_URL="$DATABASE_URL" nx run prisma:seed
+
+echo "Running the $ENV cracha backend"
+DATABASE_URL="$DATABASE_URL" $COMMAND_RUN
