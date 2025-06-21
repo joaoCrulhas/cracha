@@ -53,10 +53,17 @@ export class UserService implements OnModuleInit {
     });
   }
 
+  /**
+   * Creates a new user and returns the created user.
+   * This user will not have access to the dashboard.
+   * @param input - The user data to create.
+   * @returns The created user.
+   */
   async create(input: CreateUserRequestDto): Promise<UserDto> {
     const userCreated = await this.databaseService.client.user.create({
       data: {
         ...input,
+        hasDashboardAccess: false,
         password: await this.encryptService.encrypt(input.password),
       },
     });
