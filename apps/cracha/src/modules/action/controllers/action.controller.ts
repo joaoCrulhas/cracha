@@ -29,6 +29,14 @@ export class ActionController {
   }
 
   @Put(':id')
+  /* <<<<<<<<<<<<<<  ✨ Windsurf Command ⭐ >>>>>>>>>>>>>>>> */
+  /**
+   * Update an action
+   * @param id the id of the action to update
+   * @param input the input with the new values
+   * @returns the updated action
+   */
+  /* <<<<<<<<<<  40318af0-7b14-4e39-aea2-40e457125f49  >>>>>>>>>>> */
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() input: UpdateActionDto

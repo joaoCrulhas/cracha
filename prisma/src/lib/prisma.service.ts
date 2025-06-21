@@ -8,6 +8,7 @@ export const softDelete = Prisma.defineExtension({
         this: M,
         where: Prisma.Args<M, 'delete'>['where']
       ): Promise<Prisma.Result<M, A, 'update'>> {
+        console.log(where);
         const context = Prisma.getExtensionContext(this);
 
         return (context as any).update({
@@ -23,7 +24,7 @@ export const softDelete = Prisma.defineExtension({
 export const filterSoftDeleted = Prisma.defineExtension({
   name: 'filterSoftDeleted',
   query: {
-    $allModels: {
+    role: {
       async $allOperations({ operation, args, query }) {
         if (
           operation === 'findUnique' ||
