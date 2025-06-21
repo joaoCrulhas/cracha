@@ -3,6 +3,7 @@ import { ActionService } from './action.service';
 import { DatabaseService } from '../../system/database/services/database.service';
 import { ActionTestHelper } from '../../../helpers/test';
 import { prisma } from '@cracha/prisma';
+import { faker } from '@faker-js/faker';
 
 describe('ActionService', () => {
   let service: ActionService;
@@ -23,10 +24,11 @@ describe('ActionService', () => {
 
   describe('createAction', () => {
     it('should create an action', async () => {
+      const actionName = faker.food.dish();
       const received = await service.createAction({
-        name: 'mocked_name',
+        name: actionName,
       });
-      expect(received.name).toEqual('mocked_name');
+      expect(received.name).toEqual(actionName);
     });
   });
   describe('deleteAction', () => {
