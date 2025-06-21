@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserRoleService } from './user-role.service';
-import { DatabaseService } from '../../system/database/services/database.service';
+import { DatabaseService } from '../../system/database/services';
+import { UserTestHelper } from '../../../helpers/test';
 
 describe('UserRoleService', () => {
   let service: UserRoleService;
@@ -21,13 +22,13 @@ describe('UserRoleService', () => {
   });
 
   it('should assign a role for an user', async () => {
-    const { id: userId } = await databaseService.client.user.findFirstOrThrow();
+    const user = await UserTestHelper.createUser(databaseService.getPrisma());
     const { id: roleId } = await databaseService.client.role.findFirstOrThrow();
     const received = await service.assignUserRole({
-      userId,
+      userId: user.id,
       roleId,
     });
-    expect(received.userId).toEqual(userId);
+    expect(received.userId).toEqual(user.id);
     expect(received.roleId).toEqual(roleId);
   });
 });

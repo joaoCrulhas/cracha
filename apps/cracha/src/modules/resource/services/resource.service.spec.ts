@@ -23,6 +23,6 @@ describe('ResourceService', () => {
   it('should return a resource', async () => {
     const name = faker.airline.airport().name;
     const resource = await service.create({ name });
-    expect(resource.name).toEqual('resource');
+    expect(resource.name).toEqual(name);
   });
 });
