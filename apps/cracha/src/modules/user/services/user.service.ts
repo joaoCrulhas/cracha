@@ -31,10 +31,7 @@ export class UserService implements OnModuleInit {
     const appId = this.configService.getOrThrow<string>(
       'crachaAdminCredentials.appId'
     );
-    console.log({
-      email: user,
-      hasDashboardAccess: true,
-    });
+
     const uCount = await this.databaseService.client.user.count({
       where: {
         email: user,
