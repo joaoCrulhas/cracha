@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { UserService } from './services';
-import { UserController } from './controllers/user.controller';
+import { UserRoleService, UserService } from './services';
+import { UserController, UserRoleController } from './controllers';
 import { EncryptModule } from '../system/encrypt/encrypt.module';
 
 @Module({
   imports: [EncryptModule],
-  controllers: [UserController],
-  providers: [UserService],
+  controllers: [UserController, UserRoleController],
+  providers: [UserService, UserRoleService],
   exports: [UserService],
 })
 export class UserModule {}

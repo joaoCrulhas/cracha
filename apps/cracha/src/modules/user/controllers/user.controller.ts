@@ -8,7 +8,10 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
   @Post()
   async createUser(@Body() input: CreateUserRequestDto) {
-    const { password, ...user } = await this.userService.create(input);
+    const { password, ...user } = await this.userService.create({
+      ...input,
+      hasDashboardAccess: false,
+    });
     return user;
   }
 
