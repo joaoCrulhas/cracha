@@ -1,7 +1,7 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { ActionDto, CreateActionDto, UpdateActionDto } from '../dtos';
 import { DatabaseService } from '../../system/database/services/database.service';
-import { DEFAULT_ACTIONS } from '../types/constants';
+import { DEFAULT_ACTIONS } from '@cracha/constants';
 
 @Injectable()
 export class ActionService implements OnModuleInit {
