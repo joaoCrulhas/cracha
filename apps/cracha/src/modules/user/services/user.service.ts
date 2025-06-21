@@ -9,6 +9,7 @@ import { ConfigService } from '@nestjs/config';
 type FindUserArgs = {
   email?: string;
   username?: string;
+  hasDashboardAccess?: boolean;
 };
 
 @Injectable()
@@ -63,9 +64,10 @@ export class UserService implements OnModuleInit {
   }
 
   async find(args: FindUserArgs) {
-    const { email, username } = args;
+    const { email, username, hasDashboardAccess } = args;
     const prismaArgs: Prisma.UserFindFirstOrThrowArgs = {
       where: {
+        ...(hasDashboardAccess && { hasDashboardAccess }),
         ...(username && { username }),
         ...(email && { email }),
       },

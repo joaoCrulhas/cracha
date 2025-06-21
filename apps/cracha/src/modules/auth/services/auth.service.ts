@@ -15,7 +15,10 @@ export class AuthService {
     username: string,
     pass: string
   ): Promise<{ accessToken: string }> {
-    const user = await this.userService.find({ username });
+    const user = await this.userService.find({
+      username,
+      hasDashboardAccess: true,
+    });
     const { password, ...rest } = user;
     const match = await this.encryptService.compare(pass, password);
     if (!match) {
