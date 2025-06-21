@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@cracha/constants": ["libs/constants/src/index.ts"],
       "@cracha/prisma": ["prisma/src/index.ts"]
     }
   },

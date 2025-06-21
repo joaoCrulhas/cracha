@@ -15,6 +15,10 @@ export class DatabaseService implements OnModuleInit {
     await prisma.$connect();
   }
 
+  getPrisma() {
+    return prisma;
+  }
+
   async onModuleDestroy() {
     await prisma.$disconnect();
   }
