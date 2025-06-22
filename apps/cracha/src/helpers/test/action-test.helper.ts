@@ -5,8 +5,9 @@ export class ActionTestHelper {
   static createActionInput(
     input?: Prisma.ActionCreateInput
   ): Prisma.ActionCreateInput {
+    const name = input?.name ?? faker.lorem.word();
     return {
-      name: input?.name ?? faker.airline.airline().name,
+      name: name + '_action',
     };
   }
 
