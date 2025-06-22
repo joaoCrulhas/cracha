@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../../system/database/services';
 import { Prisma, RolePermission } from '@cracha/prisma';
+import { AddRolePermissionRequestDto } from '../dtos';
 
 @Injectable()
 export class RolePermissionsService {
@@ -14,10 +15,9 @@ export class RolePermissionsService {
    * row.
    * @param input
    */
-  async addRoleToPermission(input: {
-    roleId: number;
-    actionResourceId: number;
-  }): Promise<RolePermission> {
+  async addRoleToPermission(
+    input: AddRolePermissionRequestDto
+  ): Promise<RolePermission> {
     const args: Prisma.RolePermissionCreateArgs = {
       data: {
         actionResource: {
