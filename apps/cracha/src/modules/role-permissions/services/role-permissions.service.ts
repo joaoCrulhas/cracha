@@ -44,18 +44,24 @@ export class RolePermissionsService {
   }
 
   async getAllRolePermissions(roleId: number) {
-    return await this.databaseService.client.rolePermission.findMany({
-      include: {
-        actionResource: {
-          include: {
-            action: true,
-            resource: true,
+    const rolePermissions =
+      await this.databaseService.client.rolePermission.findMany({
+        include: {
+          role: true,
+          actionResource: {
+            include: {
+              action: true,
+              resource: true,
+            },
           },
         },
-      },
-      where: {
-        roleId,
-      },
+        where: {
+          roleId,
+        },
+      });
+    return rolePermissions.map((element) => {
+      const { action, resource } = element.actionResource;
+      return { action, resource };
     });
   }
 }
