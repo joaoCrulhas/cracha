@@ -10,6 +10,7 @@ import configuration from '../config';
 import { ActionModule } from '../modules/action/action.module';
 import { ResourceModule } from '../modules/resource/resource.module';
 import { ActionResourceModule } from '../modules/action-resource/action-resource.module';
+import { RolePermissionsModule } from '../modules/role-permissions/role-permissions.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { ActionResourceModule } from '../modules/action-resource/action-resource
     RoleModule,
     ActionModule,
     ActionResourceModule,
+    RolePermissionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
