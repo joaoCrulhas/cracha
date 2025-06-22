@@ -7,6 +7,12 @@ import { ResourceResponseDto } from '../dto/response/resource-response.dto';
 export class ResourceService {
   constructor(private readonly databaseService: DatabaseService) {}
 
+  /**
+   * Creates a new resource.
+   *
+   * @param input - The resource input data to create.
+   * @returns The created resource.
+   */
   async create(input: CreateResourceRequestDto): Promise<ResourceResponseDto> {
     const resourceCreated = await this.databaseService.client.resource.create({
       data: input,
