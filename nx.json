@@ -45,6 +45,5 @@
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
     }
-  },
-  "useDaemonProcess": false
+  }
 }
