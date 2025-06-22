@@ -17,7 +17,7 @@ export class ActionResourceService {
    * @returns {Promise<Prisma.ActionResource>} - The newly created row in the
    * `action_resources` table.
    */
-  async addResource({
+  async addResourceAction({
     resourceId,
     actionId,
   }: AddResourceRequestDto): Promise<ActionResource> {
@@ -51,7 +51,7 @@ export class ActionResourceService {
    * @returns {Promise<ActionResource>} - The result of the deletion
    * operation.
    */
-  async removeResource(
+  async removeActionResource(
     actionId: number,
     resourceId: number
   ): Promise<ActionResource> {

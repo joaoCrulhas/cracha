@@ -28,7 +28,7 @@ describe('ActionResourceService', () => {
     const resource = await ResourceTestHelper.createResource(
       databaseService.getPrisma()
     );
-    const received = await service.addResource({
+    const received = await service.addResourceAction({
       resourceId: resource.id,
       actionId: action.id,
     });
@@ -44,11 +44,11 @@ describe('ActionResourceService', () => {
     const resource = await ResourceTestHelper.createResource(
       databaseService.getPrisma()
     );
-    await service.addResource({
+    await service.addResourceAction({
       resourceId: resource.id,
       actionId: action.id,
     });
-    const received = await service.removeResource(action.id, resource.id);
+    const received = await service.removeActionResource(action.id, resource.id);
     expect(received.actionId).toEqual(action.id);
     expect(received.resourceId).toEqual(resource.id);
   });
