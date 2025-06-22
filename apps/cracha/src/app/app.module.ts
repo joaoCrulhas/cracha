@@ -9,6 +9,7 @@ import { ConfigModule } from '@nestjs/config';
 import configuration from '../config';
 import { ActionModule } from '../modules/action/action.module';
 import { ResourceModule } from '../modules/resource/resource.module';
+import { ActionResourceModule } from '../modules/action-resource/action-resource.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { ResourceModule } from '../modules/resource/resource.module';
     ResourceModule,
     RoleModule,
     ActionModule,
+    ActionResourceModule,
   ],
   controllers: [AppController],
   providers: [AppService],
