@@ -1,4 +1,11 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+} from '@nestjs/common';
 import { Admin } from '../../auth/guards';
 import { UserAdminService } from '../services';
 import { CreateUserRequestDto } from '../dtos';
@@ -10,5 +17,11 @@ export class UserAdminController {
   @Admin()
   async create(@Body() input: CreateUserRequestDto) {
     return await this.userAdminService.createUserAdmin(input);
+  }
+
+  @Get('/:id')
+  @Admin()
+  async show(@Param('id', ParseIntPipe) id: number) {
+    return await this.userAdminService.getAdminUser(id);
   }
 }
