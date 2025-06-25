@@ -1,18 +1,23 @@
 // Uncomment this line to use CSS modules
 // import styles from './app.module.scss';
 
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { LoginPage } from '../routes';
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from 'react-router-dom';
 import ProtectedRoute from '../routes/ProtectedRoutes';
 import { AuthProvider } from '../context/AuthContext';
-import { Dashboard } from '../routes/dashboard';
+import SignInPage from './auth/sign-in/page';
+import Dashboard from './dashboard/page';
 
 const router = createBrowserRouter([
   {
     path: '/',
     children: [
+      { index: true, element: <Navigate to="/dashboard" replace /> },
       // { index: true, element: <Home /> },
-      { path: 'login', element: <LoginPage /> },
+      { path: 'login', element: <SignInPage /> },
       {
         element: <ProtectedRoute />,
         children: [{ path: 'dashboard', element: <Dashboard /> }],
