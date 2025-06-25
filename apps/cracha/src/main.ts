@@ -11,6 +11,14 @@ import { useContainer } from 'class-validator';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
+
+  // Enable CORS
+  app.enableCors({
+    origin: 'http://localhost:4200', // Your frontend URL
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+  });
+
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
