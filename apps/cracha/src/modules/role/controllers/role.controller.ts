@@ -11,7 +11,7 @@ import {
 import { CreateRoleRequestDto, UpdateRoleRequestDto } from '../dtos';
 import { RoleService } from '../services';
 import { User as UserDecorator } from '../../../helpers/decorators/user.decorator';
-import { UserDto } from '../../user/dtos/response/user-response.dto';
+import { UserDto } from '@cracha/shared-types';
 
 @Controller('role')
 export class RoleController {

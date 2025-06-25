@@ -6,40 +6,48 @@ import {
   useState,
 } from 'react';
 import { loginUser } from '../api/login';
+import { LoginRequestDto, UserDto } from '@cracha/shared-types';
 
 interface AuthContextType {
-  user: string | null | undefined;
+  user: UserDto | null | undefined;
   isLoading: boolean;
-  login: (userData: { username: string; password: string }) => Promise<void>;
+  login: (userData: LoginRequestDto) => Promise<void>;
   logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<string | null | undefined>(undefined);
+  const [user, setUser] = useState<UserDto | null | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const initializeAuth = () => {
-      const storedUser = localStorage.getItem('user');
+      const userLocalStorage = localStorage.getItem('user');
+      if (!userLocalStorage) {
+        setIsLoading(false);
+        return;
+      }
+      const storedUser = JSON.parse(
+        localStorage.getItem('user') as string
+      ) as UserDto;
       setUser(storedUser);
       setIsLoading(false);
     };
-
     initializeAuth();
   }, []);
 
-  const login = async (userData: { username: string; password: string }) => {
-    const user = await loginUser(userData.username, userData.password);
-    console.log(user);
-    setUser(userData.username);
-    localStorage.setItem('user', userData.username);
+  const login = async (userData: LoginRequestDto) => {
+    const { accessToken, user } = await loginUser(userData);
+    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('user', JSON.stringify(user));
+    setUser(user);
   };
 
   const logout = () => {
     setUser(null);
     localStorage.removeItem('user');
+    localStorage.removeItem('accessToken');
   };
 
   if (isLoading) {

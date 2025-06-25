@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../../system/database/services';
-import { CreateUserRequestDto, UserDto } from '../dtos';
+import { CreateUserRequestDto } from '../dtos';
 import { EncryptService } from '../../system/encrypt/services';
+import { UserDto } from '@cracha/shared-types';
 
 @Injectable()
 export class UserAdminService {
@@ -20,14 +21,13 @@ export class UserAdminService {
    */
   async createUserAdmin(input: CreateUserRequestDto): Promise<UserDto> {
     const password = await this.encryptService.encrypt(input.password);
-    const userCreated = await this.databaseService.client.user.create({
+    return await this.databaseService.client.user.create({
       data: {
         ...input,
         password,
         hasDashboardAccess: this.hasDashboardAccess,
       },
     });
-    return UserDto.fromPrisma(userCreated);
   }
 
   /**
@@ -38,11 +38,10 @@ export class UserAdminService {
    * @throws An error if no user is found with the given ID.
    */
   async getAdminUser(id: number): Promise<UserDto> {
-    const user = await this.databaseService.client.user.findFirstOrThrow({
+    return await this.databaseService.client.user.findFirstOrThrow({
       where: {
         id,
       },
     });
-    return UserDto.fromPrisma(user);
   }
 }

@@ -1,6 +1,7 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
 import { Public } from '../guards';
+import { LoginRequestDto, LoginResponseDto } from '@cracha/shared-types';
 
 @Controller('auth')
 export class AuthController {
@@ -10,8 +11,8 @@ export class AuthController {
   @Post('login')
   @Public()
   async signIn(
-    @Body() { username, password }: { username: string; password: string }
-  ) {
+    @Body() { username, password }: LoginRequestDto
+  ): Promise<LoginResponseDto> {
     return await this.authService.signIn(username, password);
   }
 }

@@ -2,6 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../../user/services';
 import { JwtService } from '@nestjs/jwt';
 import { EncryptService } from '../../system/encrypt/services/encrypt.service';
+import { LoginResponseDto, UserDto } from '@cracha/shared-types';
 
 @Injectable()
 export class AuthService {
@@ -11,10 +12,7 @@ export class AuthService {
     private readonly encryptService: EncryptService
   ) {}
 
-  async signIn(
-    username: string,
-    pass: string
-  ): Promise<{ accessToken: string }> {
+  async signIn(username: string, pass: string): Promise<LoginResponseDto> {
     const user = await this.userService.find({
       username,
       hasDashboardAccess: true,
@@ -24,8 +22,7 @@ export class AuthService {
     if (!match) {
       throw new UnauthorizedException();
     }
-    return {
-      accessToken: await this.jwtService.signAsync(rest),
-    };
+    const accessToken = await this.jwtService.signAsync(rest);
+    return new LoginResponseDto(accessToken, new UserDto(rest));
   }
 }

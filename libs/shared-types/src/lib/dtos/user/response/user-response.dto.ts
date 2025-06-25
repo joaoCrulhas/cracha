@@ -1,5 +1,3 @@
-import { User } from '@cracha/prisma';
-
 export class UserDto {
   id: number;
   applicationId: string;
@@ -9,9 +7,7 @@ export class UserDto {
   lastName: string;
   email: string;
   hasDashboardAccess: boolean;
-  static fromPrisma(input: User): UserDto {
-    return {
-      ...input,
-    };
+  constructor(partial: Partial<UserDto>) {
+    Object.assign(this, partial);
   }
 }

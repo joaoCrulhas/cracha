@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserRequestDto } from '../dtos';
-import { UserDto } from '../dtos/response/user-response.dto';
-import { EncryptService } from '../../system/encrypt/services/encrypt.service';
+import { EncryptService } from '../../system/encrypt/services';
 import { Prisma } from 'prisma/src/lib/generated';
-import { DatabaseService } from '../../system/database/services/database.service';
+import { DatabaseService } from '../../system/database/services';
 import { ConfigService } from '@nestjs/config';
+import { UserDto } from '@cracha/shared-types';
 
 type FindUserArgs = {
   email?: string;
@@ -27,13 +27,12 @@ export class UserService {
    * @returns The created user.
    */
   async create(input: CreateUserRequestDto): Promise<UserDto> {
-    const userCreated = await this.databaseService.client.user.create({
+    return await this.databaseService.client.user.create({
       data: {
         ...input,
         password: await this.encryptService.encrypt(input.password),
       },
     });
-    return UserDto.fromPrisma(userCreated);
   }
 
   async find(args: FindUserArgs) {

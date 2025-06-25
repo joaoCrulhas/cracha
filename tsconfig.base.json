@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@cracha/constants": ["libs/constants/src/index.ts"],
-      "@cracha/prisma": ["prisma/src/index.ts"]
+      "@cracha/prisma": ["prisma/src/index.ts"],
+      "@cracha/shared-types": ["libs/shared-types/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
