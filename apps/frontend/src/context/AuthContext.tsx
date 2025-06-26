@@ -7,12 +7,14 @@ import {
 } from 'react';
 import { loginUser } from '../api/login';
 import { LoginRequestDto, UserDto } from '@cracha/shared-types';
+import { fetchUserApi } from '../api/user';
 
 interface AuthContextType {
   user: UserDto | null | undefined;
   isLoading: boolean;
   login: (userData: LoginRequestDto) => Promise<void>;
   logout: () => void;
+  fetchUser: (accessToken: string) => Promise<UserDto>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -54,8 +56,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return null;
   }
 
+  const fetchUser = async (accessToken: string): Promise<UserDto> => {
+    const user = await fetchUserApi(accessToken);
+    localStorage.removeItem('user');
+    localStorage.setItem('user', JSON.stringify(user));
+    setUser(user);
+    return user;
+  };
+
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, logout }}>
+    <AuthContext.Provider value={{ fetchUser, user, isLoading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
