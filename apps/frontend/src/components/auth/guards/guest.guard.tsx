@@ -26,7 +26,7 @@ function GuestGuard({ children }: GuestGuardProps): React.JSX.Element | null {
 
     if (user) {
       // should verify if the user can access the dashboard
-      const user = await fetchUser(token);
+      await fetchUser(token);
       setIsChecking(false);
       navigate('/dashboard');
       return;

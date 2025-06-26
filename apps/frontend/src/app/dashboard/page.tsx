@@ -1,9 +1,11 @@
-const Dashboard = () => {
+import DashboardLayout from './layout';
+
+const DashboardIndex = () => {
   return (
-    <div>
-      <h1>Dashboard</h1>
-    </div>
+    <DashboardLayout>
+      <div></div>
+    </DashboardLayout>
   );
 };
 
-export default Dashboard;
+export default DashboardIndex;
