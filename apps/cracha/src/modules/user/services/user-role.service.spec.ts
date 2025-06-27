@@ -1,7 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserRoleService } from './user-role.service';
 import { DatabaseService } from '../../system/database/services';
-import { UserTestHelper } from '../../../helpers/test';
+import { RoleTestHelper, UserTestHelper } from '../../../helpers/test';
+import { faker } from '@faker-js/faker';
 
 describe('UserRoleService', () => {
   let service: UserRoleService;
@@ -50,5 +51,90 @@ describe('UserRoleService', () => {
     });
     expect(received.userId).toEqual(user.id);
     expect(received.roleId).toEqual(roleId);
+  });
+
+  it('should return true if the user has the role', async () => {
+    const user = await UserTestHelper.createUser(databaseService.getPrisma());
+    const role = await RoleTestHelper.createRole({
+      prisma: databaseService.getPrisma(),
+      createdUserId: 1,
+      input: {
+        createrUser: {
+          connect: {
+            id: 1,
+          },
+        },
+        name: faker.food.ingredient(),
+        description: faker.lorem.sentence(),
+      },
+    });
+    await service.assignUserRole({
+      userId: user.id,
+      roleId: role.id,
+    });
+    const received = await service.userHasRole(user.id, role.id);
+    expect(received).toBeTruthy();
+  });
+
+  it('should return false if the user does not have the role', async () => {
+    const user = await UserTestHelper.createUser(databaseService.getPrisma());
+    const role = await RoleTestHelper.createRole({
+      prisma: databaseService.getPrisma(),
+      createdUserId: 1,
+      input: {
+        createrUser: {
+          connect: {
+            id: 1,
+          },
+        },
+        name: faker.food.ingredient(),
+        description: faker.lorem.sentence(),
+      },
+    });
+    const received = await service.userHasRole(user.id, role.id);
+    expect(received).toBeFalsy();
+  });
+
+  it('should return false if the user cannot perform an action over a resource', async () => {
+    const user = await UserTestHelper.createUser(databaseService.getPrisma());
+    const prisma = databaseService.getPrisma();
+
+    const resource = await prisma.resource.findFirstOrThrow({
+      select: {
+        id: true,
+      },
+    });
+    const action = await prisma.action.findFirstOrThrow({
+      select: {
+        id: true,
+      },
+    });
+
+    const received = await service.checkUserResourceAction({
+      userId: user.id,
+      resourceId: resource.id,
+      actionId: action.id,
+    });
+    expect(received).toBeFalsy();
+  });
+
+  it('should return true if the user can perform an action over a resource', async () => {
+    const prisma = databaseService.getPrisma();
+    const roleUser = await prisma.role.findFirstOrThrow({
+      include: {
+        UserRoles: true,
+      },
+      where: {
+        name: 'admin',
+      },
+    });
+    // Get the userId who has an admin role
+    const userId = roleUser.UserRoles.map((element) => element.userId)[0];
+    const received = await service.checkUserResourceAction({
+      userId: userId,
+      actionId: 1,
+      resourceId: 1,
+    });
+    expect(received).toBeTruthy();
   });
 });

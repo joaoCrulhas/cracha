@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { DatabaseService } from '../../system/database/services/database.service';
-import { UserRolesResponseDto } from '../dtos/response/user-roles-response.dto';
+import { DatabaseService } from '../../system/database/services';
+import { UserRolesResponseDto } from '../dtos';
 import { Role } from '../../role/dtos';
 
 type UserRoleArgs = { userId: number; roleId: number };
@@ -43,5 +43,46 @@ export class UserRoleService {
       userId,
       roles,
     };
+  }
+
+  async userHasRole(userId: number, roleId: number): Promise<boolean> {
+    const userRole = await this.databaseService.client.userRoles.count({
+      where: {
+        userId,
+        roleId,
+      },
+    });
+    return userRole > 0;
+  }
+
+  async checkUserResourceAction(input: {
+    userId: number;
+    resourceId: number;
+    actionId: number;
+  }): Promise<boolean> {
+    const response = await this.databaseService.client.userRoles.findFirst({
+      include: {
+        role: {
+          include: {
+            RolePermission: {
+              include: {
+                actionResource: {
+                  include: {
+                    action: true,
+                    resource: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      where: {
+        user: {
+          id: input.userId,
+        },
+      },
+    });
+    return !!response;
   }
 }

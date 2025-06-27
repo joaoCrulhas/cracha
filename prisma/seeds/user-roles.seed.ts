@@ -20,5 +20,4 @@ export async function userRolesSeed(
   });
 
   console.log('Finished seed userRoles');
-  return userRoles;
 }
