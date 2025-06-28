@@ -3,7 +3,7 @@ import DashboardLayout from './layout';
 const DashboardIndex = () => {
   return (
     <DashboardLayout>
-      <div></div>
+      <div>To aqui</div>
     </DashboardLayout>
   );
 };

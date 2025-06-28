@@ -10,6 +10,7 @@ import ProtectedRoute from '../routes/ProtectedRoutes';
 import { AuthProvider } from '../context/AuthContext';
 import SignInPage from './auth/sign-in/page';
 import DashboardIndex from './dashboard/page';
+import UsersPage from './dashboard/users/usersPage';
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,10 @@ const router = createBrowserRouter([
       { path: 'login', element: <SignInPage /> },
       {
         element: <ProtectedRoute />,
-        children: [{ path: 'dashboard', element: <DashboardIndex /> }],
+        children: [
+          { path: 'users', element: <UsersPage /> },
+          { path: 'dashboard', element: <DashboardIndex /> },
+        ],
       },
     ],
   },

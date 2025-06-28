@@ -19,4 +19,9 @@ export class UserController {
   public me(@Req() request: Request & { user: any }) {
     return request.user;
   }
+
+  @Get('/platform')
+  async getPlatformUsers() {
+    return await this.userService.getPlatformUsers();
+  }
 }

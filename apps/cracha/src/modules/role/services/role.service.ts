@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateRoleRequestDto, Role, UpdateRoleRequestDto } from '../dtos';
-import { DatabaseService } from '../../system/database/services/database.service';
+import { DatabaseService } from '../../system/database/services';
 
 @Injectable()
 export class RoleService {

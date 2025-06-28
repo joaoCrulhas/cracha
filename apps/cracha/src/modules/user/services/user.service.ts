@@ -4,7 +4,7 @@ import { EncryptService } from '../../system/encrypt/services';
 import { Prisma } from 'prisma/src/lib/generated';
 import { DatabaseService } from '../../system/database/services';
 import { ConfigService } from '@nestjs/config';
-import { UserDto } from '@cracha/shared-types';
+import { UserDto, UserRoles } from '@cracha/shared-types';
 
 type FindUserArgs = {
   email?: string;
@@ -45,5 +45,27 @@ export class UserService {
       },
     };
     return await this.databaseService.client.user.findFirstOrThrow(prismaArgs);
+  }
+
+  async getPlatformUsers(): Promise<UserRoles[]> {
+    const response = await this.databaseService.client.user.findMany({
+      include: {
+        userRoles: {
+          include: {
+            role: true,
+          },
+        },
+      },
+      where: {
+        hasDashboardAccess: false,
+      },
+    });
+    return response.map((user) => {
+      const element: UserRoles = {
+        ...user,
+        roles: user.userRoles.map((element) => element.role),
+      };
+      return element;
+    });
   }
 }
