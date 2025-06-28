@@ -27,8 +27,8 @@ model User {
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
   deletedAt DateTime?
-  Role      Role[]
-  UserRoles UserRoles[]
+  roles     Role[]
+  userRoles UserRoles[]
 
   @@index([email])
   @@index([hasDashboardAccess])
@@ -43,10 +43,10 @@ model Role {
   createrUser   User      @relation(fields: [createdUserId], references: [id], onDelete: NoAction)
   deletedAt     DateTime?
 
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  UserRoles      UserRoles[]
-  RolePermission RolePermission[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  userRoles       UserRoles[]
+  rolePermissions RolePermission[]
 
   @@map("roles")
 }

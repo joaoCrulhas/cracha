@@ -64,7 +64,7 @@ export class UserRoleService {
       include: {
         role: {
           include: {
-            RolePermission: {
+            rolePermissions: {
               include: {
                 actionResource: {
                   include: {

@@ -122,14 +122,14 @@ describe('UserRoleService', () => {
     const prisma = databaseService.getPrisma();
     const roleUser = await prisma.role.findFirstOrThrow({
       include: {
-        UserRoles: true,
+        userRoles: true,
       },
       where: {
         name: 'admin',
       },
     });
     // Get the userId who has an admin role
-    const userId = roleUser.UserRoles.map((element) => element.userId)[0];
+    const userId = roleUser.userRoles.map((element) => element.userId)[0];
     const received = await service.checkUserResourceAction({
       userId: userId,
       actionId: 1,
