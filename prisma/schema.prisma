@@ -86,9 +86,9 @@ model Action {
 
 model RolePermission {
   id               Int            @id @default(autoincrement())
-  role             Role           @relation(fields: [roleId], references: [id])
+  role             Role           @relation(fields: [roleId], references: [id], onDelete: Cascade)
   roleId           Int
-  actionResource   ActionResource @relation(fields: [actionResourceId], references: [id])
+  actionResource   ActionResource @relation(fields: [actionResourceId], references: [id], onDelete: Cascade)
   actionResourceId Int
 
   @@unique([roleId, actionResourceId])
@@ -97,9 +97,9 @@ model RolePermission {
 
 model ActionResource {
   id          Int              @id @default(autoincrement())
-  action      Action           @relation(fields: [actionId], references: [id])
+  action      Action           @relation(fields: [actionId], references: [id], onDelete: Cascade)
   actionId    Int
-  resource    Resource         @relation(fields: [resourceId], references: [id])
+  resource    Resource         @relation(fields: [resourceId], references: [id], onDelete: Cascade)
   resourceId  Int
   permissions RolePermission[]
 

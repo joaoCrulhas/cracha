@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ActionService } from './action.service';
-import { DatabaseService } from '../../system/database/services/database.service';
+import { DatabaseService } from '../../system/database/services';
 import { ActionTestHelper } from '../../../helpers/test';
 import { prisma } from '@cracha/prisma';
 import { faker } from '@faker-js/faker';

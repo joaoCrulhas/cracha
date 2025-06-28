@@ -10,7 +10,7 @@ import { roleActionResourceSeed } from './role-action-resource.seed';
 const executeSeeds = async (prisma: PrismaClient) => {
   const userIds = await userSeed(prisma);
   const roleIds = await roleSeed(prisma, userIds[0]);
-  const resourceIds = await resourceSeed(prisma, 10);
+  const resourceIds = await resourceSeed(prisma);
   const actions = await actionSeed(prisma);
   // Add role for users
   await userRolesSeed(prisma, userIds, roleIds);

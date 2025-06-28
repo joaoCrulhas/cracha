@@ -42,6 +42,7 @@ describe('AuthGuard', () => {
     jwtService.verifyAsync.mockResolvedValueOnce({} as any);
     reflector.getAllAndOverride.mockReturnValueOnce(false);
     const guard = new AuthGuard(configService, jwtService, reflector);
+    jest.spyOn(guard, 'isAdminRoute' as any).mockReturnValueOnce(false);
     const result = await guard.canActivate(createExecutionCtx('Bearer token'));
     expect(result).toEqual(true);
   });

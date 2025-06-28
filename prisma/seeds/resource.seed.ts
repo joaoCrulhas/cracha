@@ -1,16 +1,27 @@
-import { PrismaClient } from '../src';
+import { Prisma, PrismaClient } from '../src';
 
-const resourceNames = ['users', 'files', 'emails', 'documents'];
-
-export async function resourceSeed(prisma: PrismaClient, amount = 5) {
-  const reousrceIds: number[] = [];
-  for (let i = 0; i <= amount; i++) {
-    const { id } = await prisma.resource.create({
-      data: {
-        name: resourceNames[i],
-      },
-    });
-    reousrceIds.push(id);
-  }
-  return reousrceIds;
+export async function resourceSeed(prisma: PrismaClient) {
+  const input: Prisma.ResourceCreateManyInput[] = [
+    {
+      name: 'users',
+    },
+    {
+      name: 'files',
+    },
+    {
+      name: 'emails',
+    },
+    {
+      name: 'documents',
+    },
+  ];
+  await prisma.resource.createMany({
+    data: input,
+  });
+  const resources = await prisma.resource.findMany({
+    select: {
+      id: true,
+    },
+  });
+  return resources.map((element) => element.id);
 }
